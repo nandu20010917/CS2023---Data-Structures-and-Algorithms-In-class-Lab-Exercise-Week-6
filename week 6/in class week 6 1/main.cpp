@@ -1,70 +1,94 @@
-#include <iostream>
+#include <bits/stdc++.h>
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 20
 using namespace std;
-struct Node {
-   int data;
-   struct Node *next;
-};
-struct Node* top = NULL;
-void push(int val) {
-   struct Node* newnode = (struct Node*) malloc(sizeof(struct Node));
-   newnode->data = val;
-   newnode->next = top;
-   top = newnode;
+using namespace std::chrono;
+
+struct node {
+    int data;
+    struct node* link;
+} *top = NULL;
+
+void push(int data){
+    struct node* newNode;
+    newNode = new node;
+
+    if (newNode == NULL)
+    {
+        printf("Stack Overflow");
+        exit(1);
+    }
+    newNode->data = data;
+    newNode->link = NULL;
+
+    newNode->link = top;
+    top = newNode;
 }
-void pop() {
-   if(top==NULL)
-   cout<<"Stack Underflow"<<endl;
-   else {
-      cout<<"The popped element is "<< top->data <<endl;
-      top = top->next;
-   }
+
+int isEmpty(){
+    if (top == NULL)
+    return 1;
+    else
+    return 0;
 }
-void display() {
-   struct Node* ptr;
-   if(top==NULL)
-   cout<<"stack is empty";
-   else {
-      ptr = top;
-      cout<<"Stack elements are: ";
-      while (ptr != NULL) {
-         cout<< ptr->data <<" ";
-         ptr = ptr->next;
-      }
-   }
-   cout<<endl;
+
+int pop(){
+    struct node* temp;
+    int val;
+    if(isEmpty()){
+        printf("Stack Underflow");
+        exit(1);
+    }
+    temp = top;
+    val = temp->data;
+    top = top->link;
+    free(temp);
+    temp = NULL;
+    return val;
 }
-int main() {
-   int ch, val;
-   cout<<"1) Push in stack"<<endl;
-   cout<<"2) Pop from stack"<<endl;
-   cout<<"3) Display stack"<<endl;
-   cout<<"4) Exit"<<endl;
-   do {
-      cout<<"Enter choice: "<<endl;
-      cin>>ch;
-      switch(ch) {
-         case 1: {
-            cout<<"Enter value to be pushed:"<<endl;
-            cin>>val;
-            push(val);
-            break;
-         }
-         case 2: {
-            pop();
-            break;
-         }
-         case 3: {
-            display();
-            break;
-         }
-         case 4: {
-            cout<<"Exit"<<endl;
-            break;
-         }
-         default: {
-            cout<<"Invalid Choice"<<endl;
-         }
-      }
-   }while(ch!=4);
-   return 0;
+
+void display(){
+    struct node* temp;
+    temp = top;
+    while (temp){
+        printf("%d", temp->data);
+        temp = temp->link;
+    }
+    printf("\n");
+}
+
+int main(){
+    auto start = high_resolution_clock::now();
+
+    push(8);
+    push(10);
+    push(5);
+    push(11);
+    push(15);
+    push(20);
+    push(9);
+    push(7);
+    push(30);
+    push(4);
+    display();
+    pop();
+    pop();
+    pop();
+    pop();
+    pop();
+    display();
+    push(9);
+    push(10);
+    push(18);
+    push(42);
+    display();
+
+    auto stop = high_resolution_clock::now();
+
+    auto duration = duration_cast<microseconds>(stop - start);
+
+    cout << "Time taken by function: "
+         << duration.count() << " microseconds" << endl;
+
 }

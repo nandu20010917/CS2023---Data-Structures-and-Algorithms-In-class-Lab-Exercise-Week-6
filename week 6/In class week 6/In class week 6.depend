@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1680775297 source:c:\users\user\documents\c++\in class week 6\main.cpp
+	<iostream>
+	<vector>
+	<algorithm>
+	<cstdlib>
+	<chrono>
+	<iostream>
+
